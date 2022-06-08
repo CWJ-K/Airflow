@@ -12,6 +12,7 @@ Take notes of main object involved in Airflow.
     - [schedule intervals vs cron-based intervals](#schedule-intervals-vs-cron-based-intervals)
     - [Execution date](#execution-date)
   - [Backfill](#backfill)
+  - [max_active_runs](#max_active_runs)
   
 <br />
 
@@ -37,7 +38,7 @@ Airflow uses schedule intervals, instead of cron-based intervals
 ### Execution date
 * Definition: the start of the **corresponding interval** (since Airflow uses schedule intervals)
 * not the moment of DAG is executed, but the mark of schedule interval
-
+* Airflow uses **Pendulum** library for datetimes
 
 ## Backfill
 a process to perform history runs of a DAG for loading or analyzing past data sets
@@ -52,3 +53,6 @@ a process to perform history runs of a DAG for loading or analyzing past data se
       end_date=dt.datetime(year=2019, month=1, day=5),
       catchup=True,
     )
+
+## max_active_runs
+maximum number of active DAG runs
