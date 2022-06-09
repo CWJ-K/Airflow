@@ -9,6 +9,7 @@ Take notes of parameters involved in Airflow.
 - [Fundamental Concepts](#fundamental-concepts)
   - [Operators](#operators)
   - [PythonOperator](#pythonoperator)
+  - [EmptyOperator](#emptyoperator)
   - [Dynamic References](#dynamic-references)
   - [Rules of Tasks](#rules-of-tasks)
     - [atomicity](#atomicity)
@@ -28,6 +29,10 @@ Take notes of parameters involved in Airflow.
 ## PythonOperator
 * python_callable <br />
 python function which is callable
+* template_fields= ['templates_dict', 'op_args', 'op_kwargs']
+
+## EmptyOperator
+* Operator that does literally nothing
 
 <br />
 

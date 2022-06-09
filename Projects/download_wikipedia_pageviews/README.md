@@ -1,6 +1,6 @@
 <!-- omit in toc -->
 # Introduction
-Collect rocket images to fetch next launch
+Collect rocket images to fetch the next launch
 
 <br />
 
