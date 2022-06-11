@@ -13,6 +13,8 @@ Take notes of main object involved in Airflow.
     - [Execution date](#execution-date)
   - [Backfill](#backfill)
   - [max_active_runs](#max_active_runs)
+  - [run_id](#run_id)
+  - [Clear](#clear)
   
 <br />
 
@@ -56,3 +58,12 @@ a process to perform history runs of a DAG for loading or analyzing past data se
 
 ## max_active_runs
 maximum number of active DAG runs
+
+## run_id
+* scheduled__: the DAG started to run because of its schedule
+* backfill__: the DAG run started by a backfill job
+* manual__: the DAG run started by a manual action - trigger button
+
+## Clear
+clearing tasks only clear tasks within **the same DAG**
+  

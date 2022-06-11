@@ -17,6 +17,7 @@ Take notes of parameter in docker-compose of Airflow
   - [AIRFLOW_CONN_MY_POSTGRES](#airflow_conn_my_postgres)
   - [AIRFLOW__CORE__SQL_ALCHEMY_CONN](#airflow__core__sql_alchemy_conn)
   - [apache-airflow-providers-postgres](#apache-airflow-providers-postgres)
+  - [AIRFLOW__API__AUTH_BACKEND](#airflow__api__auth_backend)
 
 <br />
 
@@ -79,3 +80,6 @@ Take notes of parameter in docker-compose of Airflow
 ## apache-airflow-providers-postgres
 * in Dockerfile
 * a provider package for postgres provider
+
+## AIRFLOW__API__AUTH_BACKEND
+* to authenticate users of the API

@@ -10,6 +10,7 @@ Take notes of parameters involved in Airflow.
   - [Operators](#operators)
   - [PythonOperator](#pythonoperator)
   - [EmptyOperator](#emptyoperator)
+  - [TriggerDagRunOperator](#triggerdagrunoperator)
   - [Dynamic References](#dynamic-references)
   - [Rules of Tasks](#rules-of-tasks)
     - [atomicity](#atomicity)
@@ -33,6 +34,38 @@ python function which is callable
 
 ## EmptyOperator
 * Operator that does literally nothing
+
+<br />
+
+## TriggerDagRunOperator
+```mermaid
+flowchart LR
+    subgraph DAG 1
+    etl1 <-.trigger.-> trigger1_dag4
+    end
+
+    subgraph DAG 2 
+
+    etl2 <-.trigger.-> trigger2_dag4
+    end
+
+    subgraph DAG 3
+    etl3 <-.trigger.-> trigger3_dag4
+    end
+
+    subgraph DAG 4
+    trigger1_dag4 --> produce_report
+    trigger2_dag4 --> produce_report
+    trigger3_dag4 --> produce_report
+    end
+
+```
+
+* trigger the next dag to run 
+* if backfill, clearing TriggerDagRunOperators does not clear tasks in the triggered DAG, but a new DAG runs
+  
+
+
 
 <br />
 
