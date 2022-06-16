@@ -13,6 +13,10 @@ Take notes of parameters involved in Airflow.
     - [EmptyOperator](#emptyoperator)
     - [TriggerDagRunOperator](#triggerdagrunoperator)
     - [Operators for Cloud Servers](#operators-for-cloud-servers)
+    - [Operators for running a heavy work](#operators-for-running-a-heavy-work)
+    - [DockerOperator](#dockeroperator)
+      - [auto_remove](#auto_remove)
+      - [docker_url](#docker_url)
   - [Rules of Tasks](#rules-of-tasks)
     - [atomicity](#atomicity)
     - [Idempotent](#idempotent)
@@ -97,6 +101,18 @@ flowchart LR
   > The implementation of the AWS operator calls copy_object() on boto3
 
 <br />
+
+### Operators for running a heavy work
+* Use Spark
+  * SparkSubmitOperator
+  * SSHOperator
+  * SimpleHTTPOperator
+
+### DockerOperator
+#### auto_remove
+* remove the container after completion
+#### docker_url
+* set to Unix socket: requires Docker running on the local machine
 
 
 
