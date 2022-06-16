@@ -71,7 +71,8 @@ flowchart LR
 
 ```
 
-  * without this, only a sensor pokers the state of tasks in the same DAGs is allowed
+  * without this, only a sensor pokers the state of tasks in the same DAGs is allowed 
+    > See [TriggerDagRunOperator](../Operator/README.md)
 
     ```mermaid
     flowchart LR
