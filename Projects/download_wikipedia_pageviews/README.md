@@ -1,6 +1,6 @@
 <!-- omit in toc -->
 # Introduction
-Collect rocket images to fetch the next launch
+Download page views of wikipedia.
 
 <br />
 
