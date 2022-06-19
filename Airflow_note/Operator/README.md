@@ -53,6 +53,9 @@ Take notes of parameters involved in Airflow.
 * python_callable <br />
 python function which is callable
 * template_fields= ['templates_dict', 'op_args', 'op_kwargs']
+  * templates_dict
+  * op_args
+  * op_kwargs
 
 <br />
 
