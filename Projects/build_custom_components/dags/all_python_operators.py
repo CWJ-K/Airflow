@@ -59,7 +59,7 @@ def _get_with_pagination(session, url, params, batch_size=100):
 
 
 with DAG(
-    dag_id='python',
+    dag_id='all_python_operators',
     description='Fetches ratings from the Movielens API using the Python Operator.',
     start_date=dt.datetime(2019, 1, 1),
     end_date=dt.datetime(2019, 1, 10),

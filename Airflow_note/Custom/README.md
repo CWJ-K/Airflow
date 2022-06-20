@@ -23,6 +23,8 @@ Take notes of how to customize components in Airflow
 
 ## Methods
 * encapsulate codes into a reusable Airflow hook
+  > not directly using get_conn() outside the hook is good for
+    * not breaking encapsulation - hide the internal details - which can change the internal details without affecting outside implementation
 
 <br />
 
@@ -54,5 +56,4 @@ Take notes of how to customize components in Airflow
         if self.session is None:
             ...
         return self._session, self._base_url
-    ```
-    
+    ``` 
