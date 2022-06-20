@@ -1,0 +1,7 @@
+jupyter-base-notebook:
+    image: pachyderm/jupyterhub-pachyderm-user:1.1.0
+    ports:
+      - 8888:8888
+    container_name: airflow_test
+    volumes:
+      - ./:/home/jovyan/work/
