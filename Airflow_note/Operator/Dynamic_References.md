@@ -6,8 +6,13 @@ Take notes of dynamic references used in operators.
 
 <!-- omit in toc -->
 # Table of Contents
+- [Fundamental Concepts](#fundamental-concepts)
+  - [Airflow template](#airflow-template)
 - [Dynamic References](#dynamic-references)
 
+# Fundamental Concepts
+## Airflow template
+* define code between double curly braces is to be evaluated at runtime
 
 
 # Dynamic References

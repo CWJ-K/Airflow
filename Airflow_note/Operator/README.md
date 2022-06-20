@@ -53,6 +53,9 @@ Take notes of parameters involved in Airflow.
 * python_callable <br />
 python function which is callable
 * template_fields= ['templates_dict', 'op_args', 'op_kwargs']
+  
+  holds a list of attributes that can be templated. So that, Airflow arguments, e.g. ds, next_ds, can be passed to the templates
+
   * templates_dict
   * op_args
   * op_kwargs
