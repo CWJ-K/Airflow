@@ -97,6 +97,8 @@ Take notes of how to customize components in Airflow
     * e.g. `def execute(self, context)`
       * main method called when executing the operator
       * context: a dict including all the Airflow context variables
+        * When Airflow runs a task, it collects several variables and passes these to the context argument on the execute() method. These variables hold information about the current task
+        * context is null: make Airflow not render any arguments except for self-defined arguments in functions
 
 5. use logger provided from the BaseOperator class, available in the self.log property
 

@@ -8,6 +8,7 @@ Take notes of parameters involved in Airflow.
 # Table of Contents
 - [Fundamental Concepts](#fundamental-concepts)
 - [API](#api)
+- [XCom](#xcom)
   - [Operators](#operators)
     - [PythonOperator](#pythonoperator)
     - [EmptyOperator](#emptyoperator)
@@ -37,7 +38,9 @@ Take notes of parameters involved in Airflow.
   |AWS|boto3|
   |GCP|Cloud SDK|
   |Azure|Azure SDK for Python|
-    
+
+# XCom
+* in a live Airflow setup, any objects returned by an operator are automatically pushed to XCom
 
 <br />
 

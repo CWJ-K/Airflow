@@ -15,6 +15,8 @@ Take notes of the main components involved in Airflow.
   - [AIRFLOW_HOME](#airflow_home)
   - [AIRFLOW__CORE__DAGS_FOLDER](#airflow__core__dags_folder)
   - [airflow db init](#airflow-db-init)
+    - [airflow db init](#airflow-db-init-1)
+    - [airflow db restart](#airflow-db-restart)
 
 <br />
 
@@ -53,5 +55,10 @@ users write pipelines as DAGs, stored in the Dag folder
 <br />
 
 ## airflow db init
+### airflow db init
 * initialize a local SQLite database inside AIRFLOW_HOME
+* to be used only the first time that the database is created from the airflow.cfg
+### [airflow db restart](https://stackoverflow.com/questions/59556501/apache-airflow-initdb-vs-resetdb)
+* delete all entries from the metadata database. This includes all dag runs, Variables and Connections
+  *  Variables and connections can be annoying to recreate as they often contain secret and sensitive data, which may not be duplicated as a matter of security best practice
 
