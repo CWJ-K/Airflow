@@ -74,6 +74,7 @@ Take notes of how to customize components in Airflow
 # Custom Operator
 ## Goal
 * avoid considerable code duplication and extra effort when reusing functions in multiple DAGs
+* when operators are more often with different parameters to be set, it is appropriate to use custom operator
 
 ## Concepts
 * all hooks are subclasses of BaseOperator class

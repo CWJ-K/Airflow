@@ -131,3 +131,6 @@ dmypy.json
 # vs
 .devcontainer/
 .vscode/
+
+
+*.env

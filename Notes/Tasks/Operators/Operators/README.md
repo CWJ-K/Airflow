@@ -13,6 +13,7 @@ Take notes of parameters involved in Airflow.
     - [PythonOperator](#pythonoperator)
     - [EmptyOperator](#emptyoperator)
     - [TriggerDagRunOperator](#triggerdagrunoperator)
+    - [SimpleHttpOperator](#simplehttpoperator)
     - [Operators for Cloud Servers](#operators-for-cloud-servers)
     - [Operators for running a heavy work](#operators-for-running-a-heavy-work)
     - [DockerOperator](#dockeroperator)
@@ -21,6 +22,7 @@ Take notes of parameters involved in Airflow.
   - [Rules of Tasks](#rules-of-tasks)
     - [atomicity](#atomicity)
     - [Idempotent](#idempotent)
+      - [How to achieve it?](#how-to-achieve-it)
 - [Technical Plans](#technical-plans)
     - [1. Is the data processed again at some other time in the future?](#1-is-the-data-processed-again-at-some-other-time-in-the-future)
     - [2. How do I receive the data? Frequency, size, format, source type](#2-how-do-i-receive-the-data-frequency-size-format-source-type)
@@ -99,6 +101,11 @@ flowchart LR
   
 <br />
 
+### SimpleHttpOperator
+* request http and get the response
+
+<br />
+
 ### Operators for Cloud Servers
 * an Airflow operator can communicate with the Cloud SDK by giving arguments
 * required packages to be installed
@@ -140,6 +147,14 @@ flowchart LR
 ### Idempotent
 * if a task is called several times, its output should be identical every time 
 
+#### How to achieve it?
+* set a flag to **overwrite** destination files
+```
+Process of overwrite: 
+e.g. date columns
+1. delete existing data with current date
+2. insert data with current date
+```
 <br />
 
 # Technical Plans

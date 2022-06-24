@@ -30,12 +30,14 @@ Main Reference: [Data Pipelines With Apache Airflow](https://github.com/BasPH/da
       * Operators
       * Cloud Operators
       * Dynamic References 
+      * Big Data Transformations
     * Sensors
     * Dependency
     * Data Transfer
       * Between Systems
       * Between Tasks
     * Custom Operations
+    * Hooks
   * Tests
   * Package
 
@@ -48,6 +50,7 @@ Main Reference: [Data Pipelines With Apache Airflow](https://github.com/BasPH/da
   * Write CI/CD Tests in Airflow (WIP)
   * Build Custom Components
   * Use Virtualization in Airflow
+  * Find the Fastest Way to Get Around NYC (WIP)
 
 
 <br />

@@ -1,39 +1,50 @@
 <!-- omit in toc -->
+
 # Introduction
 How to pass data between tasks in Airflow ?
 
 <br />
 
 <!-- omit in toc -->
+
 # Table of Contents
+- [Introduction](#introduction)
+- [Table of Contents](#table-of-contents)
 - [Fundamental Concepts](#fundamental-concepts)
-  - [Operator](#operator)
-  - [Hook](#hook)
+  - [1. Operator](#1-operator)
+  - [2. Hook](#2-hook)
+  - [TaskInstance](#taskinstance)
 - [Two Methods to Write and Read Results Between Tasks](#two-methods-to-write-and-read-results-between-tasks)
-  - [Use Airflow Metastore](#use-airflow-metastore)
-    - [XComs](#xcoms)
-    - [Taskflow API](#taskflow-api)
-  - [Use a persistent location (e.g. disk or database)](#use-a-persistent-location-eg-disk-or-database)
-    - [Store connection credentials in Airflow](#store-connection-credentials-in-airflow)
-      - [CLI](#cli)
-      - [Airflow UI](#airflow-ui)
-    - [Other Systems](#other-systems)
-      - [PostgresOperator](#postgresoperator)
+  - [1. Use Airflow Metastore](#1-use-airflow-metastore)
+    - [1.1. XComs](#11-xcoms)
+    - [1.2. Taskflow API](#12-taskflow-api)
+  - [2. Use a persistent location (e.g. disk or database)](#2-use-a-persistent-location-eg-disk-or-database)
+    - [2.1. Store connection credentials in Airflow](#21-store-connection-credentials-in-airflow)
+      - [2.1.1. CLI](#211-cli)
+      - [2.1.2. Airflow UI](#212-airflow-ui)
+    - [2.2. Other Systems](#22-other-systems)
+      - [2.2.1. PostgresOperator](#221-postgresoperator)
 - [Commands](#commands)
-  - [Different methods of XComs](#different-methods-of-xcoms)
-    - [xcom_pull => templates](#xcom_pull--templates)
-    - [Automatically Pushing XComs Values](#automatically-pushing-xcoms-values)
-      - [BashOperator](#bashoperator)
-      - [PythonOperator](#pythonoperator)
-    - [Taskflow API](#taskflow-api-1)
+  - [1. Different methods of XComs](#1-different-methods-of-xcoms)
+    - [1.1. xcom_pull => templates](#11-xcom_pull--templates)
+    - [task instance ti](#task-instance-ti)
+    - [1.2. Automatically Pushing XComs Values](#12-automatically-pushing-xcoms-values)
+      - [1.2.1. BashOperator](#121-bashoperator)
+      - [1.2.2. PythonOperator](#122-pythonoperator)
+    - [1.3. Taskflow API](#13-taskflow-api)
 
 <br />
 
 # Fundamental Concepts
-## Operator
+
+## 1. Operator
 determine what has to be done
-## Hook
+
+## 2. Hook
 determine how to do something
+
+## TaskInstance
+* To push or pull, it is required to access to the TaskInstance object of the current run, which is only available through context
 
 <br />
 
@@ -42,8 +53,9 @@ publish the value to make it available for other tasks
 
 <br />
 
-## Use Airflow Metastore 
-### XComs
+## 1. Use Airflow Metastore 
+
+### 1.1. XComs
 * allow stores and reads picklable objects
     > pickle: can be stored on disk and read again later  
     > non-picklable object: e.g. database connection, file handlers
@@ -51,26 +63,27 @@ publish the value to make it available for other tasks
 * Customize XComs is to inherit BaseXCom base class
   * for the storage of XCom values in cloud storage
    
-### Taskflow API
+### 1.2. Taskflow API
 * to simplify python tasks using PythonOperators and XComs
 * drawback: the code is not easily readable and is confusing
 
 <br />
 
-## Use a persistent location (e.g. disk or database)
+## 2. Use a persistent location (e.g. disk or database)
 
-### Store connection credentials in Airflow
-#### CLI
+### 2.1. Store connection credentials in Airflow
+
+#### 2.1.1. CLI
         airflow connections add --conn-type postgres --conn-host localhost --conn-login postgres --conn-password mypassword my_postgres
 
-#### Airflow UI
+#### 2.1.2. Airflow UI
 admin > connections
 
-### Other Systems
+### 2.2. Other Systems
 * required to install packages for operators
 
 
-#### PostgresOperator
+#### 2.2.1. PostgresOperator
 * PostgresOperator instantiate hook to communicate Postgres
   * hook can create connection, send query to Postgres and close the connection
 
@@ -95,7 +108,7 @@ admin > connections
 
 # Commands
 
-## Different methods of XComs
+## 1. Different methods of XComs
 * xcom_push; xcom_pull
 
       def _train_model(**context):
@@ -116,7 +129,7 @@ admin > connections
 
 <br />
 
-### xcom_pull => templates
+### 1.1. xcom_pull => templates
 
     def _train_model(**context):
       model_id = str(uuid.uuid4())
@@ -141,11 +154,26 @@ admin > connections
 
 <br />
 
-### Automatically Pushing XComs Values
-#### BashOperator
+### task instance [ti](https://airflow.apache.org/docs/apache-airflow/stable/templates-ref.html)
+
+```python
+  process_taxi_data = PandasOperator(
+    task_id="process_taxi_data",
+    input_callable_kwargs={
+        "pandas_read_callable": pd.read_csv,
+        "bucket": "datalake",
+        "paths": "{{ ti.xcom_pull(task_ids='download_taxi_data') }}",
+    },
+
+```
+
+### 1.2. Automatically Pushing XComs Values
+
+#### 1.2.1. BashOperator
 * push the last line written to stdout as an XCom value
     BashOperator (..., xcom_push=True)
-#### PythonOperator
+
+#### 1.2.2. PythonOperator
   * publish any value returned from the Python callable
 
         def _train_model(**context):
@@ -175,7 +203,7 @@ admin > connections
   
 <br />
 
-### Taskflow API
+### 1.3. Taskflow API
 
     with DAG(
         dag_id="taskflow",
