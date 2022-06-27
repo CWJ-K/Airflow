@@ -1,6 +1,6 @@
 <!-- omit in toc -->
 # Introduction
-Take notes of main object involved in Airflow.
+How do DAGs proceed with tasks? 
 
 <br />
 
@@ -8,13 +8,15 @@ Take notes of main object involved in Airflow.
 # Table of Contents
 - [Fundamental Concepts](#fundamental-concepts)
   - [DAG](#dag)
+  - [Backfill](#backfill)
   - [Schedule Interval](#schedule-interval)
     - [schedule intervals vs cron-based intervals](#schedule-intervals-vs-cron-based-intervals)
-    - [Execution date](#execution-date)
-  - [Backfill](#backfill)
-  - [max_active_runs](#max_active_runs)
+- [Airflow UI](#airflow-ui)
   - [run_id](#run_id)
   - [Clear](#clear)
+- [Arguments](#arguments)
+  - [Execution date](#execution-date)
+  - [max_active_runs](#max_active_runs)
   
 <br />
 
@@ -22,9 +24,31 @@ Take notes of main object involved in Airflow.
 ## DAG
 instantiate a DAG object, which is a starting point of any workflow 
         
-        # python class
-        dag = DAG()
+  ``` python
+  # python class
+  dag = DAG()
+  ```
 
+<br />
+
+## Backfill
+a process to perform history runs of a DAG for loading or analyzing past data sets
+> **catch up** <br />
+**True**, implies DAG will run from start_date to current datetime. <br />
+**False**, implies DAG will run from current datetime.
+
+    
+  ```python
+  dag = DAG(
+    dag_id='backfill',
+    schedule=interval='@daily',
+    start_date=dt.datetime(year=2019, month=1, day=1),
+    end_date=dt.datetime(year=2019, month=1, day=5),
+    catchup=True,
+  )
+  ```
+
+<br />
 
 ## Schedule Interval
 Airflow uses schedule intervals, instead of cron-based intervals
@@ -37,33 +61,30 @@ Airflow uses schedule intervals, instead of cron-based intervals
 > schedule interval is convenient if interval-based DAGS is intentionally executed on unexpected datetime and still follows the rule of a DAG executed every three days
 
 
-### Execution date
-* Definition: the start of the **corresponding interval** (since Airflow uses schedule intervals)
-* not the moment of DAG is executed, but the mark of schedule interval
-* Airflow uses **Pendulum** library for datetimes
+<br />
 
-## Backfill
-a process to perform history runs of a DAG for loading or analyzing past data sets
-
-    # catch up is True, implying DAG will run from start_date to current datetime
-    # catch up is False, implying DAG will run from current datetime
-
-    dag = DAG(
-      dag_id='backfill',
-      schedule=interval='@daily',
-      start_date=dt.datetime(year=2019, month=1, day=1),
-      end_date=dt.datetime(year=2019, month=1, day=5),
-      catchup=True,
-    )
-
-## max_active_runs
-maximum number of active DAG runs
-
+# Airflow UI
 ## run_id
-* scheduled__: the DAG started to run because of its schedule
-* backfill__: the DAG run started by a backfill job
-* manual__: the DAG run started by a manual action - trigger button
+* scheduled__*: the DAG started to run because of its schedule
+* backfill__*: the DAG run started with a backfill job
+* manual__*: the DAG run started with a manual action - trigger button
 
 ## Clear
 clearing tasks only clear tasks within **the same DAG**
-  
+
+<br />
+
+# Arguments
+
+## Execution date
+* Definition: the start of the **corresponding interval** (since Airflow uses [Schedule Interval](#schedule-interval))
+* not the moment of DAG is executed, but the mark of schedule interval
+* Airflow uses **Pendulum** library for datetimes
+
+
+## max_active_runs
+* maximum number of active DAG runs
+
+
+
+
