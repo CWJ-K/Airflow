@@ -1,50 +1,51 @@
-https://airflow.apache.org/docs/apache-airflow/stable/howto/custom-operator.html
-
 <!-- omit in toc -->
 # Introduction
-Take notes of how to customize components in Airflow
+Default Airflow operators may not be applied to any cases. It may be required to build [custom operators](https://airflow.apache.org/docs/apache-airflow/stable/howto/custom-operator.html) to add more features. Therefore, it is important to learn how to customize your own operators.
 
 <br />
 
 <!-- omit in toc -->
 # Table of Contents
 - [Custom Hook](#custom-hook)
-  - [Goal](#goal)
-  - [Methods](#methods)
-  - [Concepts](#concepts)
-  - [Steps](#steps)
+  - [1. Goal](#1-goal)
+  - [2. Methods](#2-methods)
+  - [3. Concepts](#3-concepts)
+  - [4. Steps](#4-steps)
 - [Custom Operator](#custom-operator)
-  - [Goal](#goal-1)
-  - [Concepts](#concepts-1)
-  - [Steps](#steps-1)
-    - [before __init__](#before-init)
-    - [__init__](#init)
-    - [execute()](#execute)
+  - [1. Goal](#1-goal-1)
+  - [2. Concepts](#2-concepts)
+  - [3. Steps](#3-steps)
+    - [3.1. before __init__](#31-before-init)
+    - [3.2. __init__](#32-init)
+    - [3.3. execute()](#33-execute)
 - [Custom Sensor](#custom-sensor)
-  - [Goal](#goal-2)
-  - [Concepts](#concepts-2)
-  - [Steps](#steps-2)
+  - [1. Goal](#1-goal-2)
+  - [2. Concepts](#2-concepts-1)
+  - [3. Steps](#3-steps-1)
+
+<br />
 
 # Custom Hook
-## Goal
+
+## 1. Goal
 * simplifies the complexity of interaction with APIs
 * keep the API-specific code in one place to be easily reused
 
 <br />
 
-## Methods
+## 2. Methods
 * encapsulate codes into a reusable Airflow hook
   > not directly using get_conn() outside the hook is good for
     * not breaking encapsulation - hide the internal details - which can change the internal details without affecting outside implementation
 
 <br />
 
-## Concepts
+## 3. Concepts
 * all hooks are subclasses of BaseHook class
 
 <br />
 
-## Steps
+## 4. Steps
 1. define an **init** method that includes only required arguments since there are many arguments in BaseHook class
 2. follow the expected structure of other similar Airflow Hook
    * e.g. get_conn(): responsible for setting up a connection to an external system
@@ -72,19 +73,21 @@ Take notes of how to customize components in Airflow
 <br />
 
 # Custom Operator
-## Goal
+
+## 1. Goal
 * avoid considerable code duplication and extra effort when reusing functions in multiple DAGs
 * when operators are more often with different parameters to be set, it is appropriate to use custom operator
 
-## Concepts
+## 2. Concepts
 * all hooks are subclasses of BaseOperator class
 
-## Steps
-### before __init__
+## 3. Steps
+
+### 3.1. before __init__
 6. instead to hardcode date parameters, using `templates_fields`
    > tell Airflow to template these instance variables on operators
 
-### __init__
+### 3.2. __init__
 1. make sure default DAG arguments `@apply_defaults` are passed to the __init__ method of the custom operators
 
 2. use **kwargs to forward the generic arguments to the __init__ of the BaseOperator class in order to avoid listing all arguments explicitly
@@ -93,7 +96,7 @@ Take notes of how to customize components in Airflow
 3. filter required parameters in __init__
 
 
-### execute()
+### 3.3. execute()
 4. follow the expected structure of operators
     * e.g. `def execute(self, context)`
       * main method called when executing the operator
@@ -106,13 +109,14 @@ Take notes of how to customize components in Airflow
 <br />
 
 # Custom Sensor
-## Goal
+
+## 1. Goal
 * make a custom sensor for our systems
 
-## Concepts
+## 2. Concepts
 * all sensors are subclasses of BaseSensorOperator class
 
-## Steps
+## 3. Steps
 1. implement a `poke` method instead of `execute` method
    * `poke` is expected to return a **Boolean** value 
      * Process:
