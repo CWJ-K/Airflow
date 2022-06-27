@@ -9,11 +9,11 @@ How to package custom components in a sub-package within the DAGs directory?
 # Table of Contents
 - [why to package custom components?](#why-to-package-custom-components)
 - [How to package](#how-to-package)
-  - [Python package](#python-package)
+  - [1. Python package](#1-python-package)
 - [How to deploy the package](#how-to-deploy-the-package)
-  - [distribute to GitHub repository and install directly from it](#distribute-to-github-repository-and-install-directly-from-it)
-  - [use a pip package feed such as PyPI](#use-a-pip-package-feed-such-as-pypi)
-  - [install from a file-based location](#install-from-a-file-based-location)
+  - [1. distribute to GitHub repository and install directly from it](#1-distribute-to-github-repository-and-install-directly-from-it)
+  - [2. use a pip package feed such as PyPI](#2-use-a-pip-package-feed-such-as-pypi)
+  - [3. install from a file-based location](#3-install-from-a-file-based-location)
 
 <br />
 
@@ -24,21 +24,23 @@ How to package custom components in a sub-package within the DAGs directory?
 <br />
 
 # How to package
-## Python package
+
+## 1. Python package
 * setuptools
 
 <br />
 
 # How to deploy the package
-## distribute to GitHub repository and install directly from it
+
+## 1. distribute to GitHub repository and install directly from it
 ```linux
     python -m pip install git+https://
 ```
 
-## use a pip package feed such as PyPI
+## 2. use a pip package feed such as PyPI
 ```linux
     python -m pip install airflow_movielens
 ```
 
-## install from a file-based location
+## 3. install from a file-based location
 * make sure the Airflow environment can access the directory

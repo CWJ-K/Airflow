@@ -7,21 +7,22 @@ How do DAGs proceed with tasks?
 <!-- omit in toc -->
 # Table of Contents
 - [Fundamental Concepts](#fundamental-concepts)
-  - [DAG](#dag)
-  - [Backfill](#backfill)
-  - [Schedule Interval](#schedule-interval)
-    - [schedule intervals vs cron-based intervals](#schedule-intervals-vs-cron-based-intervals)
+  - [1. DAG](#1-dag)
+  - [2. Backfill](#2-backfill)
+  - [3. Schedule Interval](#3-schedule-interval)
+    - [3.1. schedule intervals vs cron-based intervals](#31-schedule-intervals-vs-cron-based-intervals)
 - [Airflow UI](#airflow-ui)
-  - [run_id](#run_id)
-  - [Clear](#clear)
+  - [1. run_id](#1-run_id)
+  - [2. Clear](#2-clear)
 - [Arguments](#arguments)
-  - [Execution date](#execution-date)
-  - [max_active_runs](#max_active_runs)
+  - [1. Execution date](#1-execution-date)
+  - [2. max_active_runs](#2-max_active_runs)
   
 <br />
 
 # Fundamental Concepts
-## DAG
+
+## 1. DAG
 instantiate a DAG object, which is a starting point of any workflow 
         
   ``` python
@@ -31,7 +32,7 @@ instantiate a DAG object, which is a starting point of any workflow
 
 <br />
 
-## Backfill
+## 2. Backfill
 a process to perform history runs of a DAG for loading or analyzing past data sets
 > **catch up** <br />
 **True**, implies DAG will run from start_date to current datetime. <br />
@@ -50,9 +51,10 @@ a process to perform history runs of a DAG for loading or analyzing past data se
 
 <br />
 
-## Schedule Interval
+## 3. Schedule Interval
 Airflow uses schedule intervals, instead of cron-based intervals
-### schedule intervals vs cron-based intervals
+
+### 3.1. schedule intervals vs cron-based intervals
 ||schedule interval|cron-based intervals|
 |:---:|:---|:---|
 |Advantage|1. easy to read <br /> 2. enable to run a DAG in every specific time intervals|1. clear to know when a previous job ran|
@@ -64,25 +66,26 @@ Airflow uses schedule intervals, instead of cron-based intervals
 <br />
 
 # Airflow UI
-## run_id
+
+## 1. run_id
 * scheduled__*: the DAG started to run because of its schedule
 * backfill__*: the DAG run started with a backfill job
 * manual__*: the DAG run started with a manual action - trigger button
 
-## Clear
+## 2. Clear
 clearing tasks only clear tasks within **the same DAG**
 
 <br />
 
 # Arguments
 
-## Execution date
+## 1. Execution date
 * Definition: the start of the **corresponding interval** (since Airflow uses [Schedule Interval](#schedule-interval))
 * not the moment of DAG is executed, but the mark of schedule interval
 * Airflow uses **Pendulum** library for datetimes
 
 
-## max_active_runs
+## 2. max_active_runs
 * maximum number of active DAG runs
 
 
