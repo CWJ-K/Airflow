@@ -1,28 +1,28 @@
 <!-- omit in toc -->
 # Introduction
-Take notes of the main components involved in Airflow.
+Understand the structure of Airflow to deploy Airflow. 
 
 <br />
 
 <!-- omit in toc -->
 # Table of Contents
 - [Main components](#main-components)
-  - [Dag files](#dag-files)
+  - [Dag Files](#dag-files)
   - [Scheduler](#scheduler)
   - [Workers](#workers)
   - [Database](#database)
 - [Environment Variables](#environment-variables)
   - [AIRFLOW_HOME](#airflow_home)
   - [AIRFLOW__CORE__DAGS_FOLDER](#airflow__core__dags_folder)
+- [Commands](#commands)
   - [airflow db init](#airflow-db-init)
-    - [airflow db init](#airflow-db-init-1)
-    - [airflow db restart](#airflow-db-restart)
+  - [airflow db restart](#airflow-db-restart)
 
 <br />
 
 # Main components
 
-## Dag files
+## Dag Files
 users write pipelines as DAGs, stored in the Dag folder
 
 <br />
@@ -32,6 +32,7 @@ users write pipelines as DAGs, stored in the Dag folder
 * scheduler checks if the schedule interval for the DAG had passed since the last time it was read. If passed, the tasks are added to the execution queue
 * scheduler checks if the dependencies of tasks have been completed 
 * scheduler wait until the new loop
+> If local executor, scheduler will be as a worker to execute tasks and store results.
 
 <br />
 
@@ -54,11 +55,16 @@ users write pipelines as DAGs, stored in the Dag folder
   
 <br />
 
+# Commands
 ## airflow db init
-### airflow db init
+
 * initialize a local SQLite database inside AIRFLOW_HOME
-* to be used only the first time that the database is created from the airflow.cfg
-### [airflow db restart](https://stackoverflow.com/questions/59556501/apache-airflow-initdb-vs-resetdb)
+* to be used only in the first time that the database is created from the airflow.cfg
+* will not affect existing databases, therefore, it enables to be recalled several times 
+
+<br />
+
+## [airflow db restart](https://stackoverflow.com/questions/59556501/apache-airflow-initdb-vs-resetdb)
 * delete all entries from the metadata database. This includes all dag runs, Variables and Connections
   *  Variables and connections can be annoying to recreate as they often contain secret and sensitive data, which may not be duplicated as a matter of security best practice
 
