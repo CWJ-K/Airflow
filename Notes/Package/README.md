@@ -10,7 +10,7 @@ How to package custom components in a sub-package within the DAGs directory?
 - [why to package custom components?](#why-to-package-custom-components)
 - [How to package](#how-to-package)
   - [Python package](#python-package)
-- [How to deploy](#how-to-deploy)
+- [How to deploy the package](#how-to-deploy-the-package)
   - [distribute to GitHub repository and install directly from it](#distribute-to-github-repository-and-install-directly-from-it)
   - [use a pip package feed such as PyPI](#use-a-pip-package-feed-such-as-pypi)
   - [install from a file-based location](#install-from-a-file-based-location)
@@ -29,7 +29,7 @@ How to package custom components in a sub-package within the DAGs directory?
 
 <br />
 
-# How to deploy
+# How to deploy the package
 ## distribute to GitHub repository and install directly from it
 ```linux
     python -m pip install git+https://
