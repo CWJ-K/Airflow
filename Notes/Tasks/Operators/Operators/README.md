@@ -1,38 +1,38 @@
 <!-- omit in toc -->
 # Introduction
-Take notes of parameters involved in Airflow.
+Operators are commonly used in Airflow and play an important role to realize tasks. Therefore, many types and arguments of operators are developing.
 
 <br />
 
 <!-- omit in toc -->
 # Table of Contents
 - [Fundamental Concepts](#fundamental-concepts)
-- [API](#api)
-- [XCom](#xcom)
-  - [Operators](#operators)
-    - [PythonOperator](#pythonoperator)
-    - [EmptyOperator](#emptyoperator)
-    - [TriggerDagRunOperator](#triggerdagrunoperator)
-    - [SimpleHttpOperator](#simplehttpoperator)
-    - [Operators for Cloud Servers](#operators-for-cloud-servers)
-    - [Operators for running a heavy work](#operators-for-running-a-heavy-work)
-    - [DockerOperator](#dockeroperator)
-      - [auto_remove](#auto_remove)
-      - [docker_url](#docker_url)
-  - [Rules of Tasks](#rules-of-tasks)
-    - [atomicity](#atomicity)
-    - [Idempotent](#idempotent)
-      - [How to achieve it?](#how-to-achieve-it)
+  - [1. API](#1-api)
+  - [2. XCom](#2-xcom)
+- [Operators](#operators)
+  - [1. PythonOperator](#1-pythonoperator)
+  - [2. EmptyOperator](#2-emptyoperator)
+  - [3. TriggerDagRunOperator](#3-triggerdagrunoperator)
+  - [4. SimpleHttpOperator](#4-simplehttpoperator)
+  - [5. Operators for Cloud Servers](#5-operators-for-cloud-servers)
+  - [6. Operators for running a heavy work](#6-operators-for-running-a-heavy-work)
+  - [7. DockerOperator](#7-dockeroperator)
+    - [7.1. auto_remove](#71-auto_remove)
+    - [7.2. docker_url](#72-docker_url)
+- [Rules of Tasks](#rules-of-tasks)
+  - [1. atomicity](#1-atomicity)
+  - [2. Idempotent](#2-idempotent)
+    - [2.1. How to achieve it?](#21-how-to-achieve-it)
 - [Technical Plans](#technical-plans)
-    - [1. Is the data processed again at some other time in the future?](#1-is-the-data-processed-again-at-some-other-time-in-the-future)
-    - [2. How do I receive the data? Frequency, size, format, source type](#2-how-do-i-receive-the-data-frequency-size-format-source-type)
-    - [3. What are we going to build with the data](#3-what-are-we-going-to-build-with-the-data)
+  - [1. Is the data processed again at some other time in the future?](#1-is-the-data-processed-again-at-some-other-time-in-the-future)
+  - [2. How do I receive the data? Frequency, size, format, source type](#2-how-do-i-receive-the-data-frequency-size-format-source-type)
+  - [3. What are we going to build with the data](#3-what-are-we-going-to-build-with-the-data)
 
 <br />
 
 # Fundamental Concepts
 
-# API
+## 1. API
 * an interface to connect and send requests to other services
 * e.g. API of cloud servers in Python
   |Cloud Server| API|
@@ -41,12 +41,14 @@ Take notes of parameters involved in Airflow.
   |GCP|Cloud SDK|
   |Azure|Azure SDK for Python|
 
-# XCom
+<br />
+
+## 2. XCom
 * in a live Airflow setup, any objects returned by an operator are automatically pushed to XCom
 
 <br />
 
-## Operators
+# Operators
 * most operators are **installed** by separate **pip packages**
   > apache-airflow-providers-*
 * can internally handle the technical implementation
@@ -54,7 +56,7 @@ Take notes of parameters involved in Airflow.
 
 <br />
 
-### PythonOperator
+## 1. PythonOperator
 * python_callable <br />
 python function which is callable
 * template_fields= ['templates_dict', 'op_args', 'op_kwargs']
@@ -67,12 +69,12 @@ python function which is callable
 
 <br />
 
-### EmptyOperator
+## 2. EmptyOperator
 * An Operator does nothing
 
 <br />
 
-### TriggerDagRunOperator
+## 3. TriggerDagRunOperator
 ```mermaid
 flowchart LR
     subgraph DAG 1
@@ -101,12 +103,12 @@ flowchart LR
   
 <br />
 
-### SimpleHttpOperator
+## 4. SimpleHttpOperator
 * request http and get the response
 
 <br />
 
-### Operators for Cloud Servers
+## 5. Operators for Cloud Servers
 * an Airflow operator can communicate with the Cloud SDK by giving arguments
 * required packages to be installed
   |Cloud|Install|
@@ -118,25 +120,31 @@ flowchart LR
 
 <br />
 
-### Operators for running a heavy work
+## 6. Operators for running a heavy work
 * Use Spark
   * SparkSubmitOperator
   * SSHOperator
   * SimpleHTTPOperator
 
-### DockerOperator
-#### auto_remove
+## 7. DockerOperator
+
+<br />
+
+### 7.1. auto_remove
 * remove the container after completion
-#### docker_url
+
+<br />
+
+### 7.2. docker_url
 * set to Unix socket: requires Docker running on the local machine
 
+<br />
 
+# Rules of Tasks
 
-## Rules of Tasks
-### atomicity
+## 1. atomicity
 * should follow atomicity to make sure a task will not produce half work if the task failed. 
   
-  <br />
   e.g. a task includes writing data and sending mails if sending mails fails, but data already is stored in the local directory. 
 
 * Solution
@@ -144,10 +152,12 @@ flowchart LR
 
 <br />
 
-### Idempotent
+## 2. Idempotent
 * if a task is called several times, its output should be identical every time 
 
-#### How to achieve it?
+<br />
+
+### 2.1. How to achieve it?
 * set a flag to **overwrite** destination files
 ```
 Process of overwrite: 
@@ -160,6 +170,8 @@ e.g. date columns
 # Technical Plans
 before building a pipeline, having a technical plan is required. Questions of Technical Plans are provided below:
 
-### 1. Is the data processed again at some other time in the future?
-### 2. How do I receive the data? Frequency, size, format, source type
-### 3. What are we going to build with the data 
+## 1. Is the data processed again at some other time in the future?
+
+## 2. How do I receive the data? Frequency, size, format, source type
+
+## 3. What are we going to build with the data 
